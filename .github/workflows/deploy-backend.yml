@@ -18,6 +18,19 @@ jobs:
           cd backend
           zip -r ../function.zip . -x "*.pyc" "__pycache__/*"
 
+      - name: Debug secret presence (safe)
+        shell: bash
+        env:
+          AKID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SAK:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          REG:  ${{ secrets.AWS_REGION }}
+          FN:   ${{ secrets.LAMBDA_FUNCTION_NAME }}
+        run: |
+          echo "AWS_ACCESS_KEY_ID length: ${#AKID}"
+          echo "AWS_SECRET_ACCESS_KEY length: ${#SAK}"
+          echo "AWS_REGION length: ${#REG}"
+          echo "LAMBDA_FUNCTION_NAME length: ${#FN}"
+
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
