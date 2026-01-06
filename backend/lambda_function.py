@@ -22,6 +22,8 @@ def lambda_handler(event, context):
                 "base": "USD",
                 "target": "KRW",
                 "rate": float(krw)
+                "version": "v1"
+
             })
         }
     except Exception as e:
