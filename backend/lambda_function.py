@@ -22,15 +22,3 @@ def lambda_handler(event, context):
             "version": "v1"
         })
     }
-
-
-
-    except Exception as e:
-        return {
-            "statusCode": 502,
-            "headers": {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            },
-            "body": json.dumps({"error": str(e)})
-        }
