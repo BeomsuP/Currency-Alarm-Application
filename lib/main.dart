@@ -41,18 +41,23 @@ class _RateScreenState extends State<RateScreen> {
       throw Exception('HTTP ${res.statusCode}');
     }
 
+
+
     final data = jsonDecode(res.body) as Map<String, dynamic>;
    final krw = data['rate'];
 if (krw is! num) throw Exception('rate not found');
-
-
-    if (krw is! num) throw Exception('KRW rate not found');
 
     return _RateResult(
       rate: krw.toDouble(),
       asOf: DateTime.now(),
     );
   }
+
+  void _reload() {
+  setState(() {
+    _future = fetchUsdKrw();
+  });
+}
 
   @override
 
@@ -73,7 +78,7 @@ if (krw is! num) throw Exception('rate not found');
                   Text('Error: ${snap.error}'),
                   const SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () => setState(() => _future = fetchUsdKrw()),
+                    onPressed: _reload,
                     child: const Text('Retry'),
                   ),
                 ],
@@ -95,7 +100,7 @@ if (krw is! num) throw Exception('rate not found');
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () => setState(() => _future = fetchUsdKrw()),
+                  onPressed: _reload,
                   child: const Text('Refresh'),
                 ),
               ],
